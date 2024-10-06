@@ -16,7 +16,7 @@ namespace ECommerce.DataAccess.Implementation
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public ProductRepository(ApplicationDbContext context, IMapper mapper) : base(context)
+        public ProductRepository(ApplicationDbContext context, IMapper mapper = null) : base(context)
         {
             _context = context;
             _mapper = mapper;

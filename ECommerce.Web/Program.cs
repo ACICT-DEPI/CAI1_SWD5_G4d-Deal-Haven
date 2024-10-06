@@ -1,4 +1,6 @@
 using ECommerce.DataAccess.Data;
+using ECommerce.DataAccess.Implementation;
+using ECommerce.Entities.Repositories;
 using ECommerce.Web.Helpers;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +20,8 @@ namespace ECommerce.Web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
             var app = builder.Build();

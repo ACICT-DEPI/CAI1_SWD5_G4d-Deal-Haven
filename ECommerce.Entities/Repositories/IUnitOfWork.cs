@@ -8,6 +8,12 @@ namespace ECommerce.Entities.Repositories
 {
     public interface IUnitOfWork : IAsyncDisposable
     {
+        ICategoryRepository Category { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IProductRepository Product { get; }
+        IOrderDetailRepository OrderDetail { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         Task<int> CompleteAsync();
     }
 }
