@@ -25,8 +25,11 @@ namespace ECommerce.DataAccess.Implementation
         {
             var categoryInDB = _context.Categories.FirstOrDefault(c => c.Id == category.Id);
 
-            if(categoryInDB is not null)
+            if (categoryInDB is not null)
+            {
                 categoryInDB = _mapper.Map<Category>(category);
+                categoryInDB.CreatedTime = DateTime.Now;
+            }
         }
     }
 }
