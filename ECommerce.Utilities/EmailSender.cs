@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Utilities
 {
-    class EmailSender : IEmailSender
+    public class EmailSender : IEmailSender
     {
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
             => Task.CompletedTask;

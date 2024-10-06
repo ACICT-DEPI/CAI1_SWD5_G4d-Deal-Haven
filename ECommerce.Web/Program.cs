@@ -1,8 +1,10 @@
 using ECommerce.DataAccess.Data;
 using ECommerce.DataAccess.Implementation;
 using ECommerce.Entities.Repositories;
+using ECommerce.Utilities;
 using ECommerce.Web.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Web
@@ -22,6 +24,8 @@ namespace ECommerce.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.Configure<StripeData>(builder.Configuration.GetSection("stripe"));
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
@@ -29,7 +33,7 @@ namespace ECommerce.Web
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            builder.Services.AddSingleton<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
