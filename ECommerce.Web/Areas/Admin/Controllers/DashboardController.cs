@@ -1,9 +1,12 @@
 ﻿using ECommerce.Entities.Repositories;
 using ECommerce.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.AdminRole)]
     public class DashboardController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
