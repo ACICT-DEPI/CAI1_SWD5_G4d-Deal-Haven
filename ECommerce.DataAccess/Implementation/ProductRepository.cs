@@ -27,7 +27,14 @@ namespace ECommerce.DataAccess.Implementation
            var productFromDB = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
 
             if(productFromDB is not null)
-                productFromDB = _mapper.Map<Product>(product);
+            {
+                productFromDB.Name = product.Name;
+                productFromDB.Description = product.Description;
+                productFromDB.Price = product.Price;
+                productFromDB.Img = product.Img;
+                productFromDB.CategoryId = product.CategoryId;
+
+            }
         }
     }
 }
