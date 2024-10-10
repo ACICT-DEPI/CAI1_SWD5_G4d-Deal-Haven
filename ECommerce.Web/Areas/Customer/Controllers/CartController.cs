@@ -91,7 +91,7 @@ namespace ECommerce.Web.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderStatus = SD.Pending;
             ShoppingCartVM.OrderHeader.PaymentStatus = SD.Pending;
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
-            ShoppingCartVM.OrderHeader.ApplicationUserId = claim.Value;
+            ShoppingCartVM.OrderHeader.ApplicationUserId = (claim.Value);
 
 
             foreach (var item in ShoppingCartVM.CartsList)
@@ -167,7 +167,7 @@ namespace ECommerce.Web.Areas.Customer.Controllers
                 orderHeader.PaymentIntentId = session.PaymentIntentId;
                 await _unitOfWork.CompleteAsync();
             }
-            var carts = await _unitOfWork.ShoppingCart.GetAllAsync(u => u.ApplicationUserId == orderHeader.ApplicationUserId);
+            var carts = await _unitOfWork.ShoppingCart.GetAllAsync(u =>(u.ApplicationUserId) == orderHeader.ApplicationUserId);
             List<ShoppingCart> shoppingcarts = carts.ToList();
             HttpContext.Session.Clear();
             _unitOfWork.ShoppingCart.RemoveRange(shoppingcarts);

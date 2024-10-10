@@ -1,11 +1,13 @@
 using ECommerce.DataAccess.Data;
 using ECommerce.DataAccess.Implementation;
+using ECommerce.Entities.Models;
 using ECommerce.Entities.Repositories;
 using ECommerce.Utilities;
 using ECommerce.Web.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace ECommerce.Web
 {
@@ -36,7 +38,7 @@ namespace ECommerce.Web
             builder.Services.AddSingleton<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            builder.Services.AddAutoMapper(typeof(MappingProfiles));
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
