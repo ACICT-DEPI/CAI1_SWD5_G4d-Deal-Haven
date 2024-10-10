@@ -11,7 +11,7 @@ namespace ECommerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +41,23 @@ namespace ECommerce.Web
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
             var app = builder.Build();
+
+            //using var scope = app.Services.CreateScope();
+            //var services = scope.ServiceProvider;
+            //var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+            //try
+            //{
+            //    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+            //    await dbContext.Database.MigrateAsync();
+            //    await StoreContextSeeding.SeedAsync(dbContext);
+            //}
+            //catch (Exception ex)
+            //{
+            //    var logger = loggerFactory.CreateLogger<Program>();
+            //    logger.LogError(ex, ex.Message);
+            //}
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
