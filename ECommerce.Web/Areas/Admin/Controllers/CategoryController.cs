@@ -1,5 +1,5 @@
-﻿using ECommerce.Entities.Repositories;
-using ECommerce.Web.Models;
+﻿using ECommerce.Entities.Models;
+using ECommerce.Entities.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers

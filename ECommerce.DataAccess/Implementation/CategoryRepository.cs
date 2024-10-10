@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ECommerce.DataAccess.Data;
 using ECommerce.Entities.Repositories;
-using ECommerce.Web.Models;
+using ECommerce.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
