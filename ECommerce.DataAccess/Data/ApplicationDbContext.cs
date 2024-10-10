@@ -1,5 +1,4 @@
 ﻿using ECommerce.Entities.Models;
-using ECommerce.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
