@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Stripe;
 
 namespace ECommerce.Web
 {
@@ -27,7 +28,8 @@ namespace ECommerce.Web
             });
 
             builder.Services.Configure<StripeData>(builder.Configuration.GetSection("stripe"));
-
+            var stripeSettings = builder.Configuration.GetSection("Stripe");
+            StripeConfiguration.ApiKey = stripeSettings["SecretKey"];
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
