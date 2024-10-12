@@ -163,7 +163,7 @@ namespace ECommerce.Web.Areas.Customer.Controllers
 
             if (session.PaymentStatus.ToLower() == "paid")
             {
-                _unitOfWork.OrderHeader.UpdateStatus(id, SD.Approve, SD.Approve);
+                await _unitOfWork.OrderHeader.UpdateStatus(id, SD.Approve, SD.Approve);
                 orderHeader.PaymentIntentId = session.PaymentIntentId;
                 await _unitOfWork.CompleteAsync();
             }
