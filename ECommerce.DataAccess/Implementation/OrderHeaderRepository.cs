@@ -20,20 +20,46 @@ namespace ECommerce.DataAccess.Implementation
         }
 
         public void Update(OrderHeader orderHeader)
-            => _context.OrderHeaders.Update(orderHeader);
+        {
+            // Check if the entity is already being tracked in the local context
+            var existingOrder = _context.OrderHeaders.Local
+                .FirstOrDefault(entry => entry.Id == orderHeader.Id);
+
+            if (existingOrder != null)
+            {
+                // Detach the existing tracked entity to avoid conflicts
+                _context.Entry(existingOrder).State = EntityState.Detached;
+            }
+
+            // Attach the new entity and mark it for an update
+            _context.OrderHeaders.Update(orderHeader);
+            _context.SaveChanges();
+        }
+
 
         public async Task UpdateStatus(int id, string? orderStatus, string? paymentStatus)
         {
             var orderFromDB = await _context.OrderHeaders.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(orderFromDB is not null)
+            if (orderFromDB is not null)
             {
-                orderFromDB.OrderStatus = orderStatus;
-                orderFromDB.PaymentDate = DateTime.Now;
+                // Update the order status if provided
+                if (!string.IsNullOrEmpty(orderStatus))
+                {
+                    orderFromDB.OrderStatus = orderStatus;
+                }
 
-                if(paymentStatus is not null)
+                // Set the payment date to now if payment status is updated
+                if (!string.IsNullOrEmpty(paymentStatus))
+                {
                     orderFromDB.PaymentStatus = paymentStatus;
+                    orderFromDB.PaymentDate = DateTime.Now;
+                }
+
+                // Save the changes back to the database
+                await _context.SaveChangesAsync();
             }
         }
+
     }
 }

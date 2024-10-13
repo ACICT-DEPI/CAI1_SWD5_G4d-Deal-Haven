@@ -1,5 +1,6 @@
 ﻿using ECommerce.DataAccess.Data;
 using ECommerce.Entities.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,34 @@ namespace ECommerce.DataAccess.Implementation
         }
 
         public async Task<int> CompleteAsync()
-            => await _context.SaveChangesAsync();
+        {
+            try
+            {
+                // Save changes to the database and return the number of affected rows
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Handle concurrency exceptions, possibly by reloading entities or notifying users
+                // Log the exception as necessary
+                throw new Exception("A concurrency error occurred while saving changes. Please try again.", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle general update exceptions related to tracking conflicts or database issues
+                // Log the exception as necessary
+                throw new Exception("An error occurred while updating the database. Please check your data.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Handle any other exceptions that may occur
+                // Log the exception as necessary
+                throw new Exception("An unexpected error occurred while saving changes. Please try again.", ex);
+            }
+        }
+
 
         public async ValueTask DisposeAsync()
-            =>await _context.DisposeAsync();
+            => await _context.DisposeAsync();
     }
 }

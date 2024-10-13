@@ -52,31 +52,35 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateOrderDetails()
         {
+            // Retrieve the existing order from the database
             var orderFromDb = await _unitofwork.OrderHeader.GetFirstorDefaultAsync(u => u.Id == OrderVM.OrderHeader.Id);
-            if (orderFromDb is not null)
+
+            if (orderFromDb is null)
             {
-                orderFromDb = _mapper.Map<OrderHeader>(OrderVM.OrderHeader);
-                //orderFromDb.Name = OrderVM.OrderHeader.Name;
-                //orderFromDb.PhoneNumber = OrderVM.OrderHeader.PhoneNumber;
-                //orderFromDb.Address = OrderVM.OrderHeader.Address;
-                //orderFromDb.City = OrderVM.OrderHeader.City;
+                return NotFound(); // Return a not found result if the order doesn't exist
             }
 
-            if (OrderVM.OrderHeader.Carrier is not null)
+            // Map properties from OrderVM to the existing order
+            _mapper.Map(OrderVM.OrderHeader, orderFromDb);
+
+            // Update only if new values are provided
+            if (!string.IsNullOrEmpty(OrderVM.OrderHeader.Carrier))
             {
                 orderFromDb.Carrier = OrderVM.OrderHeader.Carrier;
             }
 
-            if (OrderVM.OrderHeader.TrackingNumber is not null)
+            if (!string.IsNullOrEmpty(OrderVM.OrderHeader.TrackingNumber))
             {
                 orderFromDb.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
             }
 
-            _unitofwork.OrderHeader.Update(orderFromDb);
-            await _unitofwork.CompleteAsync();
+            // No need to call Update() again; changes are tracked already
+            await _unitofwork.CompleteAsync(); // Save changes to the database
+
             TempData["Update"] = "Item has Updated Successfully";
             return RedirectToAction("Details", "Order", new { orderid = orderFromDb.Id });
         }
+
 
 
         [HttpPost]
