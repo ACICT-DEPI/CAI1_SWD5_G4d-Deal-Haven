@@ -9,5 +9,6 @@ namespace ECommerce.Entities.Repositories
 {
     public interface IApplicationUserRepository : IGenericRepository<ApplicationUser>
     {
+        Task UpdateAsync(ApplicationUser user); // Define the asynchronous update method
     }
 }

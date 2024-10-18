@@ -2,6 +2,7 @@
 using ECommerce.Entities.Models;
 using ECommerce.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -74,9 +75,67 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             return View(user); // Pass the user object to the view
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(string id, ApplicationUser updatedUser)
+        //{
+        //    if (id != updatedUser.Id)
+        //    {
+        //        return NotFound(); // Ensure the ID matches the updated user's ID
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var user = await _context.ApplicationUsers.FindAsync(id); // Find the user by Id
+        //            if (user == null)
+        //            {
+        //                return NotFound(); // Return 404 if the user is not found
+        //            }
+
+        //            // Update relevant properties (example: updating only some fields)
+        //            user.UserName = updatedUser.UserName;
+        //            user.Email = updatedUser.Email;
+        //            // Add other properties you want to update
+
+        //            await _context.ApplicationUsers.ExecuteUpdateAsync(user)// Update user using UserManager
+
+        //            if (result.Succeeded)
+        //            {
+        //                return RedirectToAction(nameof(Index)); // Redirect to the users list after successful update
+        //            }
+
+        //            // Add errors to the ModelState if update failed
+        //            foreach (var error in result.Errors)
+        //            {
+        //                ModelState.AddModelError(string.Empty, error.Description);
+        //            }
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            // Handle concurrency exception if another process modified the user
+        //            if (!await _userManager.Users.AnyAsync(e => e.Id == id))
+        //            {
+        //                return NotFound(); // Return 404 if the user is no longer found
+        //            }
+
+        //            // Log the concurrency error (optional)
+        //            ModelState.AddModelError(string.Empty, "A concurrency error occurred. Please try again.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Log the exception (optional)
+        //            // _logger.LogError(ex, "An error occurred while updating the user");
+
+        //            ModelState.AddModelError(string.Empty, "An unexpected error occurred. Please try again.");
+        //        }
+        //    }
+
+        //    return View(updatedUser); // Return the view with the updated user if model state is invalid or update failed
+        //}
+
+
         public IActionResult Edit(string id, ApplicationUser updatedUser)
         {
             if (id != updatedUser.Id)
@@ -88,7 +147,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(updatedUser); // Update the user in the context
+                    _context.Users.Update(updatedUser); // Update the user in the context
                     _context.SaveChanges(); // Save changes to the database
                 }
                 catch (DbUpdateConcurrencyException)

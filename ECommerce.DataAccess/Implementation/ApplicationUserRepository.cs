@@ -17,5 +17,10 @@ namespace ECommerce.DataAccess.Implementation
         {
             _context = context;
         }
+        public async Task UpdateAsync(ApplicationUser user)
+        {
+            _context.ApplicationUsers.Update(user); // Update the entity in the context
+            await _context.SaveChangesAsync();      // Save changes asynchronously
+        }
     }
 }
