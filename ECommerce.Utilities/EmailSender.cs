@@ -1,19 +1,4 @@
-﻿//using Microsoft.AspNetCore.Identity.UI.Services;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace ECommerce.Utilities
-//{
-//    public class EmailSender : IEmailSender
-//    {
-//        public Task SendEmailAsync(string email, string subject, string htmlMessage)
-//            => Task.CompletedTask;
-//    }
-//}
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -22,8 +7,8 @@ public class EmailSender : IEmailSender
 {
     private readonly string smtpHost = "smtp.gmail.com";
     private readonly int smtpPort = 587; // Typically 587 or 465 for TLS/SSL
-    private readonly string smtpUser = "ahmedrefaatsenger@gmail.com";
-    private readonly string smtpPass = "Ihf@131996";
+    private readonly string smtpUser = "ahmed.refaat.abbas96@gmail.com";
+    private readonly string smtpPass = "736136";
 
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
@@ -58,6 +43,5 @@ public class EmailSender : IEmailSender
             }
         }
     }
-
 
 }
